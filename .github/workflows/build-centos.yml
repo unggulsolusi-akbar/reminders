@@ -1,0 +1,46 @@
+name: Build for CentOS
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build single executable (CentOS / Linux x64)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build single executable
+        run: |
+          bun build \
+            --compile \
+            --target=bun-linux-x64-baseline \
+            --outfile=reminder \
+            index.ts
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reminder-centos-linux-x64
+          path: reminder
+          if-no-files-found: error
+
+      - name: Create release asset
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: reminder
+          name: reminder-centos-linux-x64

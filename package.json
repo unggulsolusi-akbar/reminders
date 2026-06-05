@@ -1,0 +1,18 @@
+{
+  "name": "reminder",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^25.9.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "croner": "^10.0.1",
+    "lowdb": "^7.0.1",
+    "zod": "^4.4.3"
+  }
+}
