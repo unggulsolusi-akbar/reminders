@@ -20,7 +20,7 @@ interface Schema {
 }
 
 const defaultData: Schema = { tasks: [] };
-const dbPath = join(import.meta.dir, "..", "data", "db.json");
+const dbPath = "/var/www/reminder/data/db.json";
 
 export async function createDb() {
   return JSONFilePreset<Schema>(dbPath, defaultData);
